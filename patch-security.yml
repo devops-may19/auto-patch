@@ -1,0 +1,9 @@
+- hosts: production
+  tasks:
+
+  – name: update security packages on the server
+    yum:
+      name: ”*”
+      state: latest
+	  security: yes
+    when: ansible_distribution == ‘CentOS’ or ansible_distribution == ‘Red Hat Enterprise Linux’
