@@ -9,3 +9,7 @@
         security: yes
       when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
+    - name: check if reboot required after kernel update
+      shell: KERNEL_NEW=$(rpm -q –last kernel |head -1 | awk ‘{print $1}’ | sed ‘s/kernel-//’); KERNEL_NOW=$(uname -r); if [[ $KERNEL_NEW != $KERNEL_NOW ]]; then echo “reboot_needed”; else echo “reboot_not_needed”; fi
+      ignore_errors: true
+      register: reboot_required
